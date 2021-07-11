@@ -27,8 +27,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         public ViewHolder( View itemView) {
             super(itemView);
-            createTime = (TextView) itemView.findViewById(R.id.post_add_time);
-            context = (TextView)itemView.findViewById(R.id.post_context);
+            createTime = itemView.findViewById(R.id.post_add_time);
+            context = itemView.findViewById(R.id.post_context);
         }
     }
     public PostAdapter(List<Post> postList){

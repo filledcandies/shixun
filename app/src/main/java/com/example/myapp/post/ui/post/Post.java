@@ -1,6 +1,7 @@
 package com.example.myapp.post.ui.post;
 
 import java.sql.Time;
+import java.util.Arrays;
 
 public class Post {
     private Integer ownerId;
@@ -59,5 +60,17 @@ public class Post {
 
     public String getCreateTime() {
         return createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "ownerId=" + ownerId +
+                ", postId=" + postId +
+                ", message='" + message + '\'' +
+                ", pictureUrl=" + Arrays.toString(pictureUrl) +
+                ", onlyOwner=" + onlyOwner +
+                ", createTime='" + createTime + '\'' +
+                '}';
     }
 }
