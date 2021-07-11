@@ -20,6 +20,8 @@ import com.example.myapp.databinding.FragmentMessageBinding;
 import com.example.myapp.myapplication.ApplicationStatus;
 import com.example.myapp.entity.*;
 
+import com.example.myapp.post.ui.message.chat.entity.Msg;
+import com.example.myapp.post.ui.message.chat.entity.MsgBox;
 import com.example.myapp.post.ui.message.chat.util.MsgBoxAdapter;
 
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ public class MessageFragment extends Fragment {
 
     private MessageViewModel messageViewModel;
     private FragmentMessageBinding binding;
-    private List<MessageBox> messageBoxes = new ArrayList<>();
+    private List<MsgBox> messageBoxes = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -80,11 +82,11 @@ public class MessageFragment extends Fragment {
                 Result<List<MessageBox>> result = JSON.parseObject(res, new TypeReference<Result<List<MessageBox>>>() {});
 
                 if (result.isSuccess()) {
-                    for (MessageBox msgBox:result.get()) {
+                    for (MessageBox messageBox:result.get()) {
                         //获得某个MsgBox里的MsgList
                         client = new OkHttpClient(); //创建http客户端
                         params = new FormBody.Builder();//创建参数列表
-                        params.add("msgBoxId", msgBox.getMessageBoxId().toString());
+                        params.add("msgBoxId", messageBox.getMessageBoxId().toString());
 
                         request = new Request.Builder()
                                 .url(ApplicationStatus.HOST + "/chat/msg/getall")
@@ -92,9 +94,21 @@ public class MessageFragment extends Fragment {
                                 .build();
                         response = client.newCall(request).execute(); //执行请求
                         res = Objects.requireNonNull(response.body()).string();
-                        Result<List<Message>> msgListResult = JSON.parseObject(res, new TypeReference<Result<List<Message>>>() {});
+                        Result<List<Message>> messageListResult = JSON.parseObject(res, new TypeReference<Result<List<Message>>>() {});
 
-                        //messageBoxes.add(msgBox);
+                        List<Message> messageList = messageListResult.get();
+                        List<Msg> msgList = new ArrayList<>();
+                        for(Message message:messageList){
+                            Msg msg = new Msg(message.getSendTime().toString(),message.getWord());
+                            if (message.getUserId() == ApplicationStatus.getUserId()){
+                                msg.setMsgType(Msg.TYPE_SENT);
+                            }else{
+                                msg.setMsgType(Msg.TYPE_RECEIVED);
+                            }
+                            msgList.add(msg);
+                        }
+                        MsgBox msgBox = new MsgBox(null,msgList);
+                        messageBoxes.add(msgBox);
                     }
                 }
             } catch (Exception e) {
