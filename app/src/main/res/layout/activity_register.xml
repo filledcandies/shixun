@@ -23,7 +23,7 @@
         app:srcCompat="@mipmap/logo" />
 
     <LinearLayout
-        android:id="@+id/ll_register_phone"
+        android:id="@+id/ll_register_phone1"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginLeft="24dp"
@@ -50,7 +50,7 @@
             android:background="@color/login_line_color" />
 
         <EditText
-            android:id="@+id/et_register_username"
+            android:id="@+id/et_register_username2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -67,7 +67,7 @@
             android:textSize="@dimen/font_16" />
 
         <ImageView
-            android:id="@+id/iv_register_username_del"
+            android:id="@+id/iv_register_username_del7"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginLeft="16dp"
@@ -79,7 +79,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_register_sms_code"
+        android:id="@+id/ll_register_sms_code8"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginLeft="24dp"
@@ -104,7 +104,7 @@
             android:background="@color/login_line_color" />
 
         <EditText
-            android:id="@+id/et_register_auth_code"
+            android:id="@+id/et_register_auth_code4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
@@ -123,7 +123,7 @@
             android:textSize="@dimen/font_16" />
 
         <TextView
-            android:id="@+id/tv_register_sms_call"
+            android:id="@+id/tv_register_sms_call9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"

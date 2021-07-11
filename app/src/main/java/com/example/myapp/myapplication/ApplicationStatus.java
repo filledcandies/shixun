@@ -1,8 +1,14 @@
 package com.example.myapp.myapplication;
 
+import java.io.FileOutputStream;
+
 public class ApplicationStatus {
 
     private static final ApplicationStatus instance = new ApplicationStatus();
+
+    public static final String HOST = "http://10.17.39.110:8000";
+
+    public static final String USER_FILE_NAME = "userId.txt";
 
     private Integer userId;
 
@@ -12,7 +18,6 @@ public class ApplicationStatus {
 
     public static void setUserId(Integer userId) {
         instance.userId = userId;
-        //更新sqlite相关
     }
 
     public static Integer getUserId() {

@@ -24,8 +24,21 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.example.myapp.R;
+import com.example.myapp.entity.Result;
+import com.example.myapp.entity.User;
+import com.example.myapp.myapplication.ApplicationStatus;
 import com.example.myapp.post.PostActivity;
+
+import java.util.Objects;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class LogInActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener, ViewTreeObserver.OnGlobalLayoutListener, TextWatcher {
 
@@ -364,25 +377,47 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
 
     //登录
     private void loginRequest() {
-
-        startActivity(new Intent(LogInActivity.this, PostActivity.class));
-        finish();
+        new Thread(() -> {
+            try {
+                String json = JSON.toJSONString(new User(mEtLoginPwd.getText().toString(),
+                        mEtLoginUsername.getText().toString()));
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url(ApplicationStatus.HOST + "/user/login")
+                        .post(RequestBody.create(MediaType.parse("application/json"), json))
+                        .build();
+                Response response = client.newCall(request).execute();
+                String res = Objects.requireNonNull(response.body()).string();
+                Result result = JSON.parseObject(res, new TypeReference<Result>() {});
+                if (result.isSuccess()) {
+                    startActivity(new Intent(LogInActivity.this, PostActivity.class));
+                    finish();
+                } else {
+                    runOnUiThread(() -> Toast.makeText(LogInActivity.this, "邮箱或密码错误",
+                            Toast.LENGTH_SHORT).show());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                runOnUiThread(() -> Toast.makeText(LogInActivity.this, "网络连接失败",
+                        Toast.LENGTH_SHORT).show());
+            }
+        }).start();
 
     }
 
     //微博登录
     private void weiboLogin() {
-
+        showToast(R.string.not_support_to_login);
     }
 
     //QQ登录
     private void qqLogin() {
-
+        showToast(R.string.not_support_to_login);
     }
 
     //微信登录
     private void weixinLogin() {
-
+        showToast(R.string.not_support_to_login);
     }
 
     /**
