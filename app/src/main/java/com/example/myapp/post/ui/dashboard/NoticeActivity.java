@@ -22,11 +22,11 @@ public class NoticeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
-        button_back=(Button)findViewById(R.id.back_notice);
+        button_back= findViewById(R.id.back_notice);
         button_back.setOnClickListener(v -> {
             finish();
         });
-        listView = (ListView) findViewById(R.id.noticebox);
+        listView = findViewById(R.id.noticebox);
         lists = new ArrayList<>();
         lists.add(new Message());
         lists.add(new Message());

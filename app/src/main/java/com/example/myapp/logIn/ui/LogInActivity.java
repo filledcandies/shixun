@@ -390,6 +390,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 String res = Objects.requireNonNull(response.body()).string();
                 Result<Integer> result = JSON.parseObject(res, new TypeReference<Result<Integer>>() {});
                 if (result.isSuccess()) {
+                    ApplicationStatus.setUserId(result.get());
                     startActivity(new Intent(LogInActivity.this, PostActivity.class));
                     ApplicationStatus.setUserId(result.get());
                     finish();

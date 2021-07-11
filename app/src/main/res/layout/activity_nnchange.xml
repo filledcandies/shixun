@@ -50,6 +50,7 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/change_username"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="请输入新昵称">
