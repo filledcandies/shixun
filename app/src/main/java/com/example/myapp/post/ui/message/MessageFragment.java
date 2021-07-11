@@ -41,7 +41,7 @@ public class MessageFragment extends Fragment {
             binding = FragmentMessageBinding.inflate(inflater, container, false);
             View root = binding.getRoot();
 
-            final TextView textView = binding.textMessage;
+
             RecyclerView recyclerView = root.findViewById(R.id.message_container);
             //初始化MsgBoxes数据
             initMsgBoxes();
@@ -50,12 +50,7 @@ public class MessageFragment extends Fragment {
             //设置线性布局
             LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
             recyclerView.setLayoutManager(layoutManager);
-            messageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-                @Override
-                public void onChanged(@Nullable String s) {
-                    textView.setText(s);
-                }
-            });
+
             return root;
         }
 

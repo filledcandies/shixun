@@ -6,7 +6,7 @@ public class ApplicationStatus {
 
     private static final ApplicationStatus instance = new ApplicationStatus();
 
-    public static final String HOST = "http://10.17.39.110:8000";
+    public static final String HOST = "http://10.19.129.210:8000";
 
     public static final String USER_FILE_NAME = "userId.txt";
 
