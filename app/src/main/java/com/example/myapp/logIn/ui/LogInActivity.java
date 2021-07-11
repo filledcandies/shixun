@@ -381,17 +381,18 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             try {
                 String json = JSON.toJSONString(new User(mEtLoginPwd.getText().toString(),
                         mEtLoginUsername.getText().toString()));
-                OkHttpClient client = new OkHttpClient();
+                OkHttpClient client = new OkHttpClient(); //创建http客户端
                 Request request = new Request.Builder()
                         .url(ApplicationStatus.HOST + "/user/login")
                         .post(RequestBody.create(MediaType.parse("application/json"), json))
-                        .build();
-                Response response = client.newCall(request).execute();
+                        .build();  //编写请求的
+                Response response = client.newCall(request).execute(); //执行请求
                 String res = Objects.requireNonNull(response.body()).string();
                 Result<Integer> result = JSON.parseObject(res, new TypeReference<Result<Integer>>() {});
                 if (result.isSuccess()) {
                     ApplicationStatus.setUserId(result.get());
                     startActivity(new Intent(LogInActivity.this, PostActivity.class));
+                    ApplicationStatus.setUserId(result.get());
                     finish();
                 } else {
                     runOnUiThread(() -> Toast.makeText(LogInActivity.this, "邮箱或密码错误",
@@ -403,6 +404,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                         Toast.LENGTH_SHORT).show());
             }
         }).start();
+
+
 
     }
 
