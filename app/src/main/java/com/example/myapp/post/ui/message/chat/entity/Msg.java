@@ -1,9 +1,10 @@
-package com.example.myapp.post.ui.message.chat;
+package com.example.myapp.post.ui.message.chat.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.sql.Time;
+import com.example.myapp.entity.Message;
+import com.example.myapp.myapplication.ApplicationStatus;
 
 public class Msg implements Parcelable {
 
@@ -54,12 +55,24 @@ public class Msg implements Parcelable {
         return mTime;
     }
 
+    public void setTime(String Time) {
+        this.mTime = Time;
+    }
+
     public String getContent() {
         return content;
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public int getType() {
         return msgType;
+    }
+
+    public void setMsgType(int msgType) {
+        this.msgType = msgType;
     }
 
     @Override

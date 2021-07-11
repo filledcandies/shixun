@@ -1,19 +1,18 @@
-package com.example.myapp.post.ui.message.chat;
+package com.example.myapp.post.ui.message.chat.entity;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class MessageBox  {
+public class MsgBox {
     //聊天对象
     private ChatUser chatUser;
     //消息记录
     private List<Msg> msgList;
     //聊天对象
     private String title;
-    public MessageBox(){
+    public MsgBox(){
 
     }
-    public MessageBox(ChatUser cUser,List<Msg> mList){
+    public MsgBox(ChatUser cUser, List<Msg> mList){
         chatUser = cUser;
         msgList  = mList;
         if(null!=cUser.getName()){

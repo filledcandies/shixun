@@ -1,4 +1,4 @@
-package com.example.myapp.post.ui.message.chat;
+package com.example.myapp.post.ui.message.chat.entity;
 
 public class ChatUser {
 

@@ -6,8 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.myapp.R;
-import com.example.myapp.post.ui.message.chat.MessageBox;
-import com.example.myapp.post.ui.message.chat.Msg;
+import com.example.myapp.post.ui.message.chat.entity.Msg;
 import com.example.myapp.post.ui.message.chat.util.MsgAdapter;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
