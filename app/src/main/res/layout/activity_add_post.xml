@@ -37,6 +37,7 @@
     </RelativeLayout>
 
     <EditText
+        android:id="@+id/post_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -46,10 +47,10 @@
         android:lines="6"
         android:maxLength="140" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/send_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/add_image"
+        android:layout_width="128dp"
+        android:layout_height="128dp" />
 
     <Space
         android:layout_width="match_parent"

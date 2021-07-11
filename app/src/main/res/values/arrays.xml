@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spingarr">
+        <item>综合版</item>
+        <item>综1版</item>
+        <item>综2版</item>
+        <item>综3版</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:id="@+id/text_num"
+            android:textSize="20sp"
+            android:gravity="center_vertical">
+
+        </TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:id="@+id/text_time"
+            android:textSize="15sp"
+            android:gravity="center_vertical">
+
+        </TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:id="@+id/text_text"
+            android:textSize="20sp"
+            android:gravity="center_vertical">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+            <Button
+                android:id="@+id/shoucang"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:text="收藏"
+                android:textColor="@color/black"
+                android:textSize="8sp"></Button>
+
+            <LinearLayout
+                android:layout_width="290dp"
+                android:layout_height="match_parent"
+                >
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/jubao"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="举报"
+                android:textColor="@color/black"
+                android:textSize="8dp">
+
+            </Button>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

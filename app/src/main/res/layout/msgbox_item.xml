@@ -30,8 +30,8 @@
              android:layout_width="322dp"
              android:layout_height="21dp"
              android:gravity="bottom"
-             android:maxLines="1"
-             android:maxLength="40" />
+             android:ellipsize="end"
+             android:singleLine="true"/>
      </LinearLayout>
 
 

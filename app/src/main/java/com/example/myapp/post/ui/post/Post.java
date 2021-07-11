@@ -12,13 +12,13 @@ public class Post {
     //是否他人可见
     private  Boolean onlyOwner = false;
 
-    private Time createTime;
+    private String createTime;
 
     public Post(){
 
     }
 
-    public Post(Integer ownerId, String message, Boolean onlyOwner, Time createTime) {
+    public Post(Integer ownerId, String message, Boolean onlyOwner, String createTime) {
         this.ownerId = ownerId;
         this.message = message;
         this.onlyOwner = onlyOwner;
@@ -55,5 +55,9 @@ public class Post {
 
     public Boolean getOnlyOwner() {
         return onlyOwner;
+    }
+
+    public String getCreateTime() {
+        return createTime;
     }
 }

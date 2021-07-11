@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EDE6E6"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/white"
+                app:icon="?attr/actionModeCloseDrawable"
+                app:iconTint="@color/black"
+                android:id="@+id/back_nn">
+
+            </Button>
+
+            <TextView
+                android:layout_width="290dp"
+                android:layout_height="match_parent"
+                android:text="修改昵称"
+                android:textSize="25dp"
+                android:textColor="@color/black"
+                android:gravity="center_vertical">
+
+            </TextView>
+
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/white"
+                android:text="保存"
+                android:textColor="@color/black"
+                style="?android:attr/borderlessButtonStyle"
+                android:id="@+id/save_nn">
+
+            </Button>
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="请输入新昵称">
+
+        </EditText>
+
+
+    </LinearLayout>
+</RelativeLayout>

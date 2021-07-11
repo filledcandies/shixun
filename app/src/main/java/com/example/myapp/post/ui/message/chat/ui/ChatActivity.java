@@ -58,8 +58,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 if(!"".equals(input)){
                     Msg msg = new Msg(input,Msg.TYPE_SENT);
                     msgList.add(msg);
-                    //msgAdapter.notifyItemInserted(msgList.size()-1);
-                   msgAdapter.notifyDataSetChanged();
+                    msgAdapter.notifyItemInserted(msgList.size()-1);
                     msgRecyclerView.scrollToPosition(msgList.size()-1);
                     InputText.setText("");
                     try {

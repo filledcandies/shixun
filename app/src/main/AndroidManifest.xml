@@ -9,7 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApp">
-        <activity android:name=".post.ui.post.AddPostActivity"></activity>
+        <activity android:name=".post.ui.dashboard.NoticeActivity"></activity>
+        <activity android:name=".post.ui.dashboard.PasswordChangeActivity" />
+        <activity android:name=".post.ui.dashboard.EmailChangeActivity" />
+        <activity android:name=".post.ui.dashboard.NNChangeActivity" />
+        <activity android:name=".post.ui.dashboard.PPChangeActivity" />
+        <activity android:name=".post.ui.dashboard.AccountManageActivity" />
+        <activity android:name=".post.ui.post.ShowPostActivity" />
+        <activity android:name=".post.ui.post.AddPostActivity" />
         <activity android:name=".post.ui.message.chat.ui.ChatActivity" /> <!-- 忘记密码 -->
         <activity android:name=".logIn.ui.ForgetPwdActivity" /> <!-- 注册 -->
         <activity android:name=".logIn.ui.RegisterActivity" /> <!-- 登录 -->
