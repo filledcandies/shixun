@@ -148,6 +148,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     showToast("注册成功");
                     ApplicationStatus.setUserId(result.get().getUserId());
                     startActivity(new Intent(RegisterActivity.this, PostActivity.class));
+                    finish();
                 } else {
                     showToast(result.getMessage());
                 }
