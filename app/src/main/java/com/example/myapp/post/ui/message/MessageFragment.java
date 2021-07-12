@@ -55,7 +55,7 @@ public class MessageFragment extends Fragment {
 
          recyclerView = root.findViewById(R.id.message_container);
         //初始化MsgBoxes数据
-        initMsgBoxes();
+        //initMsgBoxes();
 
         return root;
     }
@@ -67,6 +67,8 @@ public class MessageFragment extends Fragment {
     }
 
     public void initMsgBoxes(){
+
+        messageBoxes.clear();
         new Thread(()->{
             try {
                 OkHttpClient client = new OkHttpClient(); //创建http客户端
@@ -156,4 +158,9 @@ public class MessageFragment extends Fragment {
         }).start();
     }
 
+    @Override
+    public void onStart() {
+       initMsgBoxes();
+        super.onStart();
+    }
 }

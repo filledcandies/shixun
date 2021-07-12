@@ -2,9 +2,11 @@ package com.example.myapp.post.ui.message.chat.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import okhttp3.FormBody;
 import okhttp3.MediaType;
@@ -47,6 +48,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView msgRecyclerView;
 
     private MsgAdapter msgAdapter;
+    Timer timer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         msgRecyclerView.setLayoutManager(layoutManager);
         msgAdapter = new MsgAdapter(msgList);
         msgRecyclerView.setAdapter(msgAdapter);
+        msgRecyclerView.scrollToPosition(msgList.size()-1);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,23 +106,17 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-
-        //绑定一个定时器，处于当前界面的时候，可以定期拉取对方发来的新消息
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-            /**
-             * 获得某个MessageBox里的MessageList
-             */
-            @Override
-            public void run() {
+        new Thread(()->{
+            for(int i = 0;true;){
                 try {
+
                     //创建连接对象
                     OkHttpClient client = new OkHttpClient(); //创建http客户端
                     FormBody.Builder params = new FormBody.Builder();//创建参数列表
                     params.add("msgBoxId", msgBoxId.toString());
                     Integer lastMsgId = 0;
                     if(msgList.size() != 0){
-                        lastMsgId = msgList.get(msgList.size()).getMsgId();
+                        lastMsgId = msgList.get(msgList.size()-1).getMsgId();
                     }
                     params.add("userId", ApplicationStatus.getUserId().toString());
                     params.add("msgId",lastMsgId.toString());
@@ -152,20 +149,97 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                             }
                             msgList.add(msg);
                         }
+                        Log.d("UpdateMsg", "onCreate: "+msgList.get(msgList.size()-1));
                         //TODO 这里已经获得MsgList，根据需求，将他们展示在页面内
+                        runOnUiThread(()->{
+
+                            msgAdapter = new MsgAdapter(msgList);
+                            msgRecyclerView.setAdapter(msgAdapter);
+                            msgRecyclerView.scrollToPosition(msgList.size()-1);
+                            Toast.makeText(ChatActivity.this,"new",Toast.LENGTH_SHORT).show();
+
+                        });
+                        Thread.sleep(500);
 
                     }
 
                 }catch (Exception e){
 
+                    Log.d("MsgUpdate error", "onCreate: ");
+
                 }
             }
-        };
+        }).start();
+//        //绑定一个定时器，处于当前界面的时候，可以定期拉取对方发来的新消息
+//
+//        TimerTask timerTask = new TimerTask() {
+//            /**
+//             * 获得某个MessageBox里的MessageList
+//             */
+//            @Override
+//            public void run() {
+//                try {
+//                    //创建连接对象
+//                    OkHttpClient client = new OkHttpClient(); //创建http客户端
+//                    FormBody.Builder params = new FormBody.Builder();//创建参数列表
+//                    params.add("msgBoxId", msgBoxId.toString());
+//                    Integer lastMsgId = 0;
+//                    if(msgList.size() != 0){
+//                        lastMsgId = msgList.get(msgList.size()).getMsgId();
+//                    }
+//                    params.add("userId", ApplicationStatus.getUserId().toString());
+//                    params.add("msgId",lastMsgId.toString());
+//                    //先检测是否有新消息，
+//                    Request checkRequest = new Request.Builder()
+//                            .url(ApplicationStatus.HOST + "/chat/box/check")
+//                            .post(params.build())
+//                            .build();
+//                    Response checkRespose = client.newCall(checkRequest).execute();
+//                    String res = Objects.requireNonNull(checkRespose.body()).string();
+//                    Result<Boolean> result = JSON.parseObject(res, new TypeReference<Result<Boolean>>() {});
+//
+//                    if(result.get()==Boolean.TRUE){//若有结果，则执行消息拉取
+//                        //拉取请求sync
+//                        Request syncRequest = new Request.Builder()
+//                                .url(ApplicationStatus.HOST + "/chat/msg/getsync")
+//                                .post(params.build())
+//                                .build();
+//                        Response syncResponse = client.newCall(syncRequest).execute(); //执行请求
+//                        String res2 = Objects.requireNonNull(syncResponse.body()).string();
+//                        Result<List<Message>> messageListResult = JSON.parseObject(res, new TypeReference<Result<List<Message>>>() {});
+//                        List<Message> messageList = messageListResult.get();
+//                        List<Msg> msgList = new ArrayList<>();
+//                        for(Message message:messageList){
+//                            Msg msg = new Msg(message.getSendTime().toString(),message.getWord());
+//                            if (message.getUserId() == ApplicationStatus.getUserId()){
+//                                msg.setMsgType(Msg.TYPE_SENT);
+//                            }else{
+//                                msg.setMsgType(Msg.TYPE_RECEIVED);
+//                            }
+//                            msgList.add(msg);
+//                        }
+//                        //TODO 这里已经获得MsgList，根据需求，将他们展示在页面内
+//                        runOnUiThread(()->{
+//
+//                            msgAdapter = new MsgAdapter(msgList);
+//                            msgRecyclerView.setAdapter(msgAdapter);
+//                            msgRecyclerView.scrollToPosition(msgList.size()-1);
+//                             Toast.makeText(ChatActivity.this,"new",Toast.LENGTH_SHORT).show();
+//
+//                        });
+//
+//                    }
+//
+//                }catch (Exception e){
+//
+//                }
+//            }
+//        };
+//
+//        timer.schedule(timerTask,0,300); //启动定时器
 
-        timer.schedule(timerTask,0,1000); //启动定时器
 
-        //TODO: timer的关闭为如下调用，应该放在这个页面的退出逻辑里
-        //timer.cancel();
+
     }
 
 
@@ -184,5 +258,87 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.ib_navigation_back) {
             finish();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //绑定一个定时器，处于当前界面的时候，可以定期拉取对方发来的新消息
+
+//        TimerTask timerTask = new TimerTask() {
+//            /**
+//             * 获得某个MessageBox里的MessageList
+//             */
+//            @Override
+//            public void run() {
+//                try {
+//                    //创建连接对象
+//                    OkHttpClient client = new OkHttpClient(); //创建http客户端
+//                    FormBody.Builder params = new FormBody.Builder();//创建参数列表
+//                    params.add("msgBoxId", msgBoxId.toString());
+//                    Integer lastMsgId = 0;
+//                    if(msgList.size() != 0){
+//                        lastMsgId = msgList.get(msgList.size()).getMsgId();
+//                    }
+//                    params.add("userId", ApplicationStatus.getUserId().toString());
+//                    params.add("msgId",lastMsgId.toString());
+//                    //先检测是否有新消息，
+//                    Request checkRequest = new Request.Builder()
+//                            .url(ApplicationStatus.HOST + "/chat/box/check")
+//                            .post(params.build())
+//                            .build();
+//                    Response checkRespose = client.newCall(checkRequest).execute();
+//                    String res = Objects.requireNonNull(checkRespose.body()).string();
+//                    Result<Boolean> result = JSON.parseObject(res, new TypeReference<Result<Boolean>>() {});
+//
+//                    if(result.get()==Boolean.TRUE){//若有结果，则执行消息拉取
+//                        //拉取请求sync
+//                        Request syncRequest = new Request.Builder()
+//                                .url(ApplicationStatus.HOST + "/chat/msg/getsync")
+//                                .post(params.build())
+//                                .build();
+//                        Response syncResponse = client.newCall(syncRequest).execute(); //执行请求
+//                        String res2 = Objects.requireNonNull(syncResponse.body()).string();
+//                        Result<List<Message>> messageListResult = JSON.parseObject(res, new TypeReference<Result<List<Message>>>() {});
+//                        List<Message> messageList = messageListResult.get();
+//                        List<Msg> msgList = new ArrayList<>();
+//                        for(Message message:messageList){
+//                            Msg msg = new Msg(message.getSendTime().toString(),message.getWord());
+//                            if (message.getUserId() == ApplicationStatus.getUserId()){
+//                                msg.setMsgType(Msg.TYPE_SENT);
+//                            }else{
+//                                msg.setMsgType(Msg.TYPE_RECEIVED);
+//                            }
+//                            msgList.add(msg);
+//                        }
+//                        //TODO 这里已经获得MsgList，根据需求，将他们展示在页面内
+//                        runOnUiThread(()->{
+//
+//                            msgAdapter = new MsgAdapter(msgList);
+//                            msgRecyclerView.setAdapter(msgAdapter);
+//                            msgRecyclerView.scrollToPosition(msgList.size()-1);
+//                             Toast.makeText(ChatActivity.this,"new",Toast.LENGTH_SHORT).show();
+//
+//                        });
+//
+//                    }
+//
+//                }catch (Exception e){
+//
+//                }
+//            }
+//        };
+//
+//        timer.schedule(timerTask,0,300); //启动定时器
+
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //计时器关闭
+
     }
 }
