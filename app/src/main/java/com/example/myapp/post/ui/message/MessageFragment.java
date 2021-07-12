@@ -20,6 +20,7 @@ import com.example.myapp.databinding.FragmentMessageBinding;
 import com.example.myapp.myapplication.ApplicationStatus;
 import com.example.myapp.entity.*;
 
+import com.example.myapp.post.ui.message.chat.entity.ChatUser;
 import com.example.myapp.post.ui.message.chat.entity.Msg;
 import com.example.myapp.post.ui.message.chat.entity.MsgBox;
 import com.example.myapp.post.ui.message.chat.util.MsgBoxAdapter;
@@ -107,7 +108,33 @@ public class MessageFragment extends Fragment {
                             }
                             msgList.add(msg);
                         }
-                        MsgBox msgBox = new MsgBox(null,msgList);
+
+                        //获取聊天对象的各个属性
+                        ChatUser cUser = new ChatUser();
+                        client = new OkHttpClient(); //创建http客户端
+                        params = new FormBody.Builder();//创建参数列表
+                        Integer cUserId ;
+                        if(messageBox.getUser1Id()==ApplicationStatus.getUserId()){
+                            cUserId = messageBox.getUser2Id();
+                        }else{
+                            cUserId = messageBox.getUser1Id();
+                        }
+                        params.add("userId", cUserId.toString());
+
+                        request = new Request.Builder()
+                                .url(ApplicationStatus.HOST + "/user/find")
+                                .post(params.build())
+                                .build();
+                        response = client.newCall(request).execute(); //执行请求
+                        res = Objects.requireNonNull(response.body()).string();
+                        Result<User> userResult = JSON.parseObject(res, new TypeReference<Result<User>>() {});
+                        User user = userResult.get();
+                        cUser.setuId(cUserId.toString());
+                        cUser.setuIconId(R.mipmap.default_user_icon);
+                        cUser.setuName(user.getUserName());
+
+                        //将聊天对象和历史信息存入MsgBox
+                        MsgBox msgBox = new MsgBox(cUser,msgList,messageBox.getMessageBoxId());
                         messageBoxes.add(msgBox);
                     }
                 }

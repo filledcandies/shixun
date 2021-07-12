@@ -17,12 +17,24 @@ public class ChatUser {
 
     }
 
+    public void setuId(String uId) {
+        this.uId = uId;
+    }
+
     public String getId() {
         return uId;
     }
 
+    public void setuIconId(int uIconId) {
+        this.uIconId = uIconId;
+    }
+
     public int getIcon() {
         return uIconId;
+    }
+
+    public void setuName(String uName) {
+        this.uName = uName;
     }
 
     public String getName() {
