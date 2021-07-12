@@ -3,32 +3,39 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:orientation="vertical"
-    android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp">
-    <TextView
-        android:layout_marginTop="5dp"
+    android:background="#f0f0ff">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="2dp"
-        android:id="@+id/title_notice"
-        android:text="@string/notice_default_text"
-        android:textSize="20sp"
-        android:gravity="center_vertical">
-    </TextView>
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp">
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:id="@+id/title_notice"
+            android:text="@string/notice_default_text"
+            android:textSize="20sp"
+            android:gravity="center_vertical">
+        </TextView>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_notice"
-        android:text="@string/notice_default_text"
-        android:textSize="15sp"
-        android:gravity="center_vertical">
-    </TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_notice"
+            android:text="@string/notice_default_text"
+            android:textSize="15sp"
+            android:gravity="center_vertical">
+        </TextView>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="right"
-        android:text="@string/notice_default_time"
-        android:id="@+id/time_notice"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:text="@string/notice_default_time"
+            android:id="@+id/time_notice"/>
+    </LinearLayout>
+
 </LinearLayout>

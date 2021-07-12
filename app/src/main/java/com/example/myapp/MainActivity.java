@@ -14,6 +14,7 @@ import com.example.myapp.myapplication.ApplicationStatus;
 import com.example.myapp.post.PostActivity;
 import com.example.myapp.post.ui.dashboard.NoticeActivity;
 import com.example.myapp.post.ui.post.Post;
+import com.example.myapp.post.ui.post.ShowPostActivity;
 import com.example.myapp.service.NoticeService;
 import com.example.myapp.sqliteuitil.DataBaseHelper;
 
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Integer userId = ApplicationStatus.getUserId();
+//        startActivity(new Intent(MainActivity.this, ShowPostActivity.class));
         new Handler().postDelayed(() -> {
             if (userId == null || userId <= 0) {
                 startActivity(new Intent(MainActivity.this, LogInActivity.class));

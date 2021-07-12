@@ -8,11 +8,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.myapp.R;
+import com.example.myapp.post.ui.notifications.NotificationsFragment;
 
 import java.util.List;
 
 public class topicbox_adapter extends BaseAdapter{
+    public int num;
     private List<Message> Datas;
     private Context mContext;
 
@@ -39,9 +43,21 @@ public class topicbox_adapter extends BaseAdapter{
         TextView textView1 = (TextView)view.findViewById(R.id.text_num);
         TextView textView2 = (TextView)view.findViewById(R.id.text_time);
         TextView textView3 = (TextView)view.findViewById(R.id.text_text);
-        textView1.setText("1");
-        textView2.setText("2");
-        textView3.setText("3");
+        textView1.setText(getText(1));
+        textView2.setText(getText(getNum()));
+        textView3.setText(getText(getNum()));
+
         return view;
     }
+    public String getText(int i){
+            if (i==1)
+                return "123";
+            else
+                return "456";
+
+    }
+    public int getNum() {
+        return new NotificationsFragment().getNum();
+    }
+
 }

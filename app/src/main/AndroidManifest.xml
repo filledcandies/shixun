@@ -15,7 +15,7 @@
         android:theme="@style/Theme.MyApp"
         android:usesCleartextTraffic="true"
         android:name=".myapplication.MyApplication">
-        <activity android:name=".post.ui.dashboard.NoticeActivity"></activity>
+        <activity android:name=".post.ui.dashboard.NoticeActivity" />
         <activity android:name=".post.ui.dashboard.PasswordChangeActivity" />
         <activity android:name=".post.ui.dashboard.EmailChangeActivity" />
         <activity android:name=".post.ui.dashboard.NNChangeActivity" />

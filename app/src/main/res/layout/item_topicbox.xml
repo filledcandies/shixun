@@ -6,7 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_margin="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/top_linearlayout">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -34,7 +35,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp">
+            android:layout_height="30dp"
+            android:id="@+id/bottom_linearlayout"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/shoucang"
@@ -43,7 +46,8 @@
                 android:layout_height="30dp"
                 android:text="收藏"
                 android:textColor="@color/black"
-                android:textSize="8sp"></Button>
+                android:textSize="8sp"
+                android:focusable="false"></Button>
 
             <LinearLayout
                 android:layout_width="290dp"
@@ -55,11 +59,12 @@
             <Button
                 android:id="@+id/jubao"
                 style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:text="举报"
                 android:textColor="@color/black"
-                android:textSize="8dp">
+                android:textSize="8dp"
+                android:focusable="false">
 
             </Button>
         </LinearLayout>

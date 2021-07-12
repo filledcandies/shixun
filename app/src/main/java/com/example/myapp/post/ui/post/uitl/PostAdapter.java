@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapp.R;
+import com.example.myapp.entity.MyPost;
 import com.example.myapp.post.ui.message.chat.util.MsgBoxAdapter;
 import com.example.myapp.post.ui.post.Post;
 
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
-    private List<Post> posts;
+    private List<MyPost> posts;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -31,7 +32,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             context = itemView.findViewById(R.id.post_context);
         }
     }
-    public PostAdapter(List<Post> postList){
+    public PostAdapter(List<MyPost> postList){
         this.posts = postList;
 
     }
@@ -45,7 +46,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder( ViewHolder holder, int position) {
 
-        Post post = posts.get(position);
+        MyPost post = posts.get(position);
         holder.createTime.setText(post.getCreateTime().toString());
         holder.context.setText(post.getMessage());
 
@@ -53,7 +54,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return posts.size();
     }
 
 

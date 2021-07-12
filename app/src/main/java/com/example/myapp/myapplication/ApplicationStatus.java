@@ -15,6 +15,8 @@ public class ApplicationStatus {
     private static final String FILE_NAME = "data";
 
     private static final String USER_ID = "userId";
+    private static final String EMAIL = "email";
+    private static final String PASSWORD = "password";
 
     private Integer userId;
 
@@ -33,6 +35,24 @@ public class ApplicationStatus {
                 getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE).edit();
         editor.putInt(USER_ID, saveToLocal ? userId : 0);
         editor.apply();
+    }
+
+    public static void saveUser(String email, String password) {
+        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = MyApplication.getContext().
+                getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE).edit();
+        editor.putString(EMAIL, email);
+        editor.putString(PASSWORD, password);
+        editor.apply();
+    }
+
+    public static String getEmail() {
+        return MyApplication.getContext().getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE)
+                .getString(EMAIL, "");
+    }
+
+    public static String getPassword() {
+        return MyApplication.getContext().getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE)
+                .getString(PASSWORD, "");
     }
 
     public static Integer getUserId() {
