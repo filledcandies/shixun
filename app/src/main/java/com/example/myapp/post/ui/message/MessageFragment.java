@@ -1,25 +1,26 @@
 package com.example.myapp.post.ui.message;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.example.myapp.R;
 import com.example.myapp.databinding.FragmentMessageBinding;
+import com.example.myapp.entity.Message;
+import com.example.myapp.entity.MessageBox;
+import com.example.myapp.entity.Result;
+import com.example.myapp.entity.User;
 import com.example.myapp.myapplication.ApplicationStatus;
-import com.example.myapp.entity.*;
-
 import com.example.myapp.post.ui.message.chat.entity.ChatUser;
 import com.example.myapp.post.ui.message.chat.entity.Msg;
 import com.example.myapp.post.ui.message.chat.entity.MsgBox;
@@ -39,6 +40,9 @@ public class MessageFragment extends Fragment {
     private MessageViewModel messageViewModel;
     private FragmentMessageBinding binding;
     private List<MsgBox> messageBoxes = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private View root;
+    private MsgBoxAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,17 +50,12 @@ public class MessageFragment extends Fragment {
                 new ViewModelProvider(this).get(MessageViewModel.class);
 
         binding = FragmentMessageBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+         root = binding.getRoot();
 
 
-        RecyclerView recyclerView = root.findViewById(R.id.message_container);
+         recyclerView = root.findViewById(R.id.message_container);
         //初始化MsgBoxes数据
         initMsgBoxes();
-        MsgBoxAdapter adapter = new MsgBoxAdapter(messageBoxes);
-        recyclerView.setAdapter(adapter);
-        //设置线性布局
-        LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
-        recyclerView.setLayoutManager(layoutManager);
 
         return root;
     }
@@ -123,21 +122,32 @@ public class MessageFragment extends Fragment {
                         }
                         params.add("userId", cUserId.toString());
 
+
+
                         request = new Request.Builder()
-                                .url(ApplicationStatus.HOST + "/user/find")
-                                .post(params.build())
+                                .url(ApplicationStatus.HOST + "/user/find?userId="+cUserId)
+                                .get()
                                 .build();
                         response = client.newCall(request).execute(); //执行请求
                         res = Objects.requireNonNull(response.body()).string();
                         Result<User> userResult = JSON.parseObject(res, new TypeReference<Result<User>>() {});
                         User user = userResult.get();
+                        Log.d("Uname", "initMsgBoxes: "+user);
                         cUser.setuId(cUserId.toString());
                         cUser.setuIconId(R.mipmap.default_user_icon);
+
                         cUser.setuName(user.getUserName());
 
                         //将聊天对象和历史信息存入MsgBox
                         MsgBox msgBox = new MsgBox(cUser,msgList,messageBox.getMessageBoxId());
+                        Log.d("MsgBox", "initMsgBoxes: "+cUser.getName());
                         messageBoxes.add(msgBox);
+                        getActivity().runOnUiThread(()->{adapter = new MsgBoxAdapter(messageBoxes);
+                        recyclerView.setAdapter(adapter);
+                        //设置线性布局
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
+                        recyclerView.setLayoutManager(layoutManager);});
+
                     }
                 }
             } catch (Exception e) {

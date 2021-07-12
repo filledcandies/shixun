@@ -1,9 +1,14 @@
 package com.example.myapp.post.ui.message.chat.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -11,20 +16,9 @@ import com.example.myapp.R;
 import com.example.myapp.entity.Message;
 import com.example.myapp.entity.Result;
 import com.example.myapp.entity.User;
-import com.example.myapp.logIn.ui.RegisterActivity;
 import com.example.myapp.myapplication.ApplicationStatus;
-import com.example.myapp.post.PostActivity;
 import com.example.myapp.post.ui.message.chat.entity.Msg;
 import com.example.myapp.post.ui.message.chat.util.MsgAdapter;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -181,7 +175,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
         Intent intent = getIntent();
         msgList = intent.getParcelableArrayListExtra("msgList");
-        msgBoxId =  intent.getParcelableExtra("MsgBoxId");
+        msgBoxId =  intent.getIntExtra("MsgBoxId",-1);
 
     }
 

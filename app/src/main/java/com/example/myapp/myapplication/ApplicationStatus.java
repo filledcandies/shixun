@@ -1,7 +1,5 @@
 package com.example.myapp.myapplication;
 
-import java.io.FileOutputStream;
-
 public class ApplicationStatus {
 
     private static final ApplicationStatus instance = new ApplicationStatus();
