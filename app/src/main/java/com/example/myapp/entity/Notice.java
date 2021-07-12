@@ -1,9 +1,12 @@
 package com.example.myapp.entity;
 
+import org.litepal.annotation.Column;
+import org.litepal.crud.LitePalSupport;
+
 import java.io.Serializable;
 import java.util.Date;
 
-public class Notice implements Serializable {
+public class Notice extends LitePalSupport implements Serializable {
     private Integer noticeId;
     private Integer userId;
     private Integer commentId;

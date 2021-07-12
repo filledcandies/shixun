@@ -1,6 +1,10 @@
 package com.example.myapp.myapplication;
 
-import java.io.FileOutputStream;
+import android.annotation.SuppressLint;
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+
 
 public class ApplicationStatus {
 
@@ -8,16 +12,27 @@ public class ApplicationStatus {
 
     public static final String HOST = "http://10.17.39.110:8000";
 
-    public static final String USER_FILE_NAME = "userId.txt";
+    private static final String FILE_NAME = "data";
+
+    private static final String USER_ID = "userId";
 
     private Integer userId;
 
     private ApplicationStatus() {
-        // 尝试获取sqlite中的userId
+        userId = MyApplication.getContext().getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE)
+                .getInt(USER_ID, 0);
     }
 
     public static void setUserId(Integer userId) {
+        setUserId(userId, true);
+    }
+
+    public static void setUserId(Integer userId, boolean saveToLocal) {
         instance.userId = userId;
+        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = MyApplication.getContext().
+                getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE).edit();
+        editor.putInt(USER_ID, saveToLocal ? userId : 0);
+        editor.apply();
     }
 
     public static Integer getUserId() {

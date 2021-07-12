@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Button;
 
 import com.example.myapp.logIn.ui.LogInActivity;
@@ -22,7 +23,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button button = findViewById(R.id.button);
-        button.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, PostActivity.class)));
+        Integer userId = ApplicationStatus.getUserId();
+        new Handler().postDelayed(() -> {
+            if (userId == null || userId <= 0) {
+                startActivity(new Intent(MainActivity.this, LogInActivity.class));
+            } else {
+                startActivity(new Intent(MainActivity.this, PostActivity.class));
+            }
+        }, 2000);
     }
 }

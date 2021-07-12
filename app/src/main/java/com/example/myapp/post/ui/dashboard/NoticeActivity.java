@@ -19,6 +19,8 @@ import com.example.myapp.entity.Result;
 import com.example.myapp.myapplication.ApplicationStatus;
 
 
+import org.litepal.LitePal;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -40,6 +42,7 @@ public class NoticeActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         notices = new ArrayList<>();
+        notices.addAll(LitePal.findAll(Notice.class));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
         button_back= findViewById(R.id.back_notice);
@@ -68,6 +71,7 @@ public class NoticeActivity extends AppCompatActivity {
                     if (noticeList != null && noticeList.size() > 0) {
                         for (int i = noticeList.size() - 1; i >= 0; i--) {
                             notices.add(0, noticeList.get(i));
+                            noticeList.get(i).save();
                         }
                         runOnUiThread(() -> {
                             for (int i = 0; i < notices.size(); i++) {

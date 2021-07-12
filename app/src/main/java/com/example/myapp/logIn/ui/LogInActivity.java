@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -59,6 +60,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     private LinearLayout mLayBackBar;
     private TextView mTvLoginForgetPwd;
     private Button mBtLoginRegister;
+    private CheckBox mCbRememberLogin;
+
 
     //全局Toast
     private Toast mToast;
@@ -101,6 +104,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         //提交、注册
         mBtLoginSubmit = findViewById(R.id.bt_login_submit);
         mBtLoginRegister = findViewById(R.id.bt_login_register);
+        mCbRememberLogin = findViewById(R.id.cb_remember_login);
 
         //忘记密码
         mTvLoginForgetPwd = findViewById(R.id.tv_login_forget_pwd);
@@ -390,9 +394,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 String res = Objects.requireNonNull(response.body()).string();
                 Result<Integer> result = JSON.parseObject(res, new TypeReference<Result<Integer>>() {});
                 if (result.isSuccess()) {
-                    ApplicationStatus.setUserId(result.get());
+                    ApplicationStatus.setUserId(result.get(), mCbRememberLogin.isChecked());
                     startActivity(new Intent(LogInActivity.this, PostActivity.class));
-                    ApplicationStatus.setUserId(result.get());
                     finish();
                 } else {
                     runOnUiThread(() -> Toast.makeText(LogInActivity.this, "邮箱或密码错误",
