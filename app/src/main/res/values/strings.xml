@@ -37,4 +37,6 @@
     <string name="register_email_auth_code">验证码</string>
 
     <string name="not_support_to_login">暂时不支持该登录方式</string>
+    <string name="notice_default_text">notice</string>
+    <string name="notice_default_time">1分钟前</string>
 </resources>
