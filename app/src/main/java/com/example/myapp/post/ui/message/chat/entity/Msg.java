@@ -1,16 +1,19 @@
-package com.example.myapp.post.ui.message.chat;
+package com.example.myapp.post.ui.message.chat.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.sql.Time;
+import com.example.myapp.entity.Message;
+import com.example.myapp.myapplication.ApplicationStatus;
 
 public class Msg implements Parcelable {
+
 
     public static int TYPE_SENT = 0;
     public static int TYPE_RECEIVED = 1;
     private String mTime;
     private String content;
+    private Integer msgId;
     //信息的类型，1为收到的信息，0为发送的信息
     private int msgType=Msg.TYPE_RECEIVED;
 
@@ -54,12 +57,24 @@ public class Msg implements Parcelable {
         return mTime;
     }
 
+    public void setTime(String Time) {
+        this.mTime = Time;
+    }
+
     public String getContent() {
         return content;
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public int getType() {
         return msgType;
+    }
+
+    public void setMsgType(int msgType) {
+        this.msgType = msgType;
     }
 
     @Override
@@ -73,5 +88,13 @@ public class Msg implements Parcelable {
         dest.writeString(content);
         dest.writeInt(msgType);
 
+    }
+
+    public Integer getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(Integer msgId) {
+        this.msgId = msgId;
     }
 }

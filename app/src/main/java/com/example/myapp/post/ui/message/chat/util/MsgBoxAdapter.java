@@ -12,10 +12,9 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapp.R;
-import com.example.myapp.post.PostActivity;
-import com.example.myapp.post.ui.message.chat.ChatUser;
-import com.example.myapp.post.ui.message.chat.MessageBox;
-import com.example.myapp.post.ui.message.chat.Msg;
+import com.example.myapp.post.ui.message.chat.entity.ChatUser;
+import com.example.myapp.post.ui.message.chat.entity.MsgBox;
+import com.example.myapp.post.ui.message.chat.entity.Msg;
 import com.example.myapp.post.ui.message.chat.ui.ChatActivity;
 
 
@@ -24,7 +23,7 @@ import java.util.List;
 
 public class MsgBoxAdapter extends RecyclerView.Adapter<MsgBoxAdapter.ViewHolder> {
 
-    private List<MessageBox> MsgBoxList;
+    private List<MsgBox> MsgBoxList;
 
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -45,9 +44,9 @@ public class MsgBoxAdapter extends RecyclerView.Adapter<MsgBoxAdapter.ViewHolder
 
         }
     }
-    public MsgBoxAdapter(List<MessageBox> messageBoxList){
+    public MsgBoxAdapter(List<MsgBox> msgBoxList){
 
-        MsgBoxList = messageBoxList;
+        MsgBoxList = msgBoxList;
 
     }
 
@@ -61,17 +60,19 @@ public class MsgBoxAdapter extends RecyclerView.Adapter<MsgBoxAdapter.ViewHolder
                 int position = holder.getLayoutPosition();
                 Context mContext = v.getContext();
                 //获取点击的消息记录
-                MessageBox messageBox = MsgBoxList.get(position);
-                ChatUser chatUser = messageBox.getChatUser();
-                List<Msg> msgList = messageBox.getMsgList();
-                Toast.makeText(mContext,"chat with "+messageBox.getTitle()+" is on clicked",Toast.LENGTH_SHORT).show();
+                MsgBox msgBox = MsgBoxList.get(position);
+                ChatUser chatUser = msgBox.getChatUser();
+                List<Msg> msgList = msgBox.getMsgList();
+                Toast.makeText(mContext,"chat with "+ msgBox.getTitle()+" is on clicked",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext,ChatActivity.class);
                 //传递聊天对象昵称
-                intent.putExtra("title",messageBox.getTitle());
+                intent.putExtra("title", msgBox.getTitle());
                 //传递聊天对像id
                 intent.putExtra("cUid",chatUser.getId());
                 //传递信息记录
                 intent.putExtra("msgList", (ArrayList<Msg>) msgList);
+                //传递 msgBoxID
+                intent.putExtra("MsgBoxId",msgBox.getMsgBoxId().intValue());
 
                 mContext.startActivity(intent);
 
@@ -84,10 +85,10 @@ public class MsgBoxAdapter extends RecyclerView.Adapter<MsgBoxAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        MessageBox messageBox = MsgBoxList.get(position);
-        holder.ChatUserIcon.setImageResource(messageBox.getChatUser().getIcon());
-        holder.cUserName.setText(messageBox.getTitle());
-        holder.LatestMsg.setText(messageBox.getMsgList().get(messageBox.getMsgList().size()-1).getContent());
+        MsgBox msgBox = MsgBoxList.get(position);
+        holder.ChatUserIcon.setImageResource(msgBox.getChatUser().getIcon());
+        holder.cUserName.setText(msgBox.getTitle());
+        holder.LatestMsg.setText(msgBox.getMsgList().get(msgBox.getMsgList().size()-1).getContent());
 
 
     }

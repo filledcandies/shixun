@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapp.R;
-import com.example.myapp.post.ui.message.chat.Msg;
+import com.example.myapp.post.ui.message.chat.entity.Msg;
 
 import java.util.List;
 
