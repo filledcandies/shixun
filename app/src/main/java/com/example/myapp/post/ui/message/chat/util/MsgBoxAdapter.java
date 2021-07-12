@@ -71,6 +71,8 @@ public class MsgBoxAdapter extends RecyclerView.Adapter<MsgBoxAdapter.ViewHolder
                 intent.putExtra("cUid",chatUser.getId());
                 //传递信息记录
                 intent.putExtra("msgList", (ArrayList<Msg>) msgList);
+                //传递 msgboxID
+                intent.putExtra("MsgBoxId",msgBox.getMsgBoxId());
 
                 mContext.startActivity(intent);
 
