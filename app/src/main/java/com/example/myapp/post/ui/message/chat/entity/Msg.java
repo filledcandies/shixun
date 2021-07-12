@@ -8,10 +8,12 @@ import com.example.myapp.myapplication.ApplicationStatus;
 
 public class Msg implements Parcelable {
 
+
     public static int TYPE_SENT = 0;
     public static int TYPE_RECEIVED = 1;
     private String mTime;
     private String content;
+    private Integer msgId;
     //信息的类型，1为收到的信息，0为发送的信息
     private int msgType=Msg.TYPE_RECEIVED;
 
@@ -86,5 +88,13 @@ public class Msg implements Parcelable {
         dest.writeString(content);
         dest.writeInt(msgType);
 
+    }
+
+    public Integer getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(Integer msgId) {
+        this.msgId = msgId;
     }
 }

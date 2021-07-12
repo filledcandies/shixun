@@ -84,7 +84,7 @@ public class MessageFragment extends Fragment {
 
                 if (result.isSuccess()) {
                     for (MessageBox messageBox:result.get()) {
-                        //获得某个MsgBox里的MsgList
+                        //获得某个MessageBox里的MessageList
                         client = new OkHttpClient(); //创建http客户端
                         params = new FormBody.Builder();//创建参数列表
                         params.add("msgBoxId", messageBox.getMessageBoxId().toString());
@@ -97,10 +97,12 @@ public class MessageFragment extends Fragment {
                         res = Objects.requireNonNull(response.body()).string();
                         Result<List<Message>> messageListResult = JSON.parseObject(res, new TypeReference<Result<List<Message>>>() {});
 
+                        //将 Message转化为 Msg 并存放在 MsgList中
                         List<Message> messageList = messageListResult.get();
                         List<Msg> msgList = new ArrayList<>();
                         for(Message message:messageList){
                             Msg msg = new Msg(message.getSendTime().toString(),message.getWord());
+                            msg.setMsgId(message.getMessageId());
                             if (message.getUserId() == ApplicationStatus.getUserId()){
                                 msg.setMsgType(Msg.TYPE_SENT);
                             }else{
