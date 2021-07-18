@@ -27,6 +27,9 @@
         <activity android:name=".logIn.ui.ForgetPwdActivity" /> <!-- 注册 -->
         <activity android:name=".logIn.ui.RegisterActivity" /> <!-- 登录 -->
         <activity android:name=".logIn.ui.ResetPwdActivity"/>
+        <activity android:name=".post.ui.notifications.AddNotificationActivity"/>
+        <activity android:name=".post.ui.notifications.information"/>
+
         <activity
             android:name=".logIn.ui.LogInActivity"
             android:configChanges="keyboardHidden|orientation"
